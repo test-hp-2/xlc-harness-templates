@@ -1,0 +1,44 @@
+pipeline:
+  name: retest3
+  identifier: retest3
+  projectIdentifier: xlcapp9090devo
+  orgIdentifier: tasdevopsautomation
+  tags: {}
+  stages:
+    - stage:
+        name: test
+        identifier: test
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: ShellScript
+                  name: ShellScript_1
+                  identifier: ShellScript_1
+                  spec:
+                    shell: Bash
+                    executionTarget: {}
+                    source:
+                      type: Inline
+                      spec:
+                        script: |-
+                          echo $TOKEN | base64 -w0 > test
+
+                          cat test
+                    environmentVariables:
+                      - name: TOKEN
+                        type: String
+                        value: <+pipeline.variables.TOKEN>
+                    outputVariables: []
+                  timeout: 10m
+        tags: {}
+        delegateSelectors:
+          - z-dv-ue2-delegate
+  variables:
+    - name: TOKEN
+      type: Secret
+      description: ""
+      required: false
+      value: test-demo3
